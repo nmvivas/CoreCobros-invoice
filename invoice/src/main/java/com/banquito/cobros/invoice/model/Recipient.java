@@ -31,13 +31,13 @@ public class Recipient {
     private String identificationType;
     @Column(name = "IDENTIFICATION", length = 20, nullable = false)
     private String identification;
-    @Column(name = "LAST_NAME", length = 50, nullable = false)
+    @Column(name = "LAST_NAME", length = 50)
     private String lastName;
-    @Column(name = "FIRST_NAME", length = 50, nullable = false)
+    @Column(name = "FIRST_NAME", length = 50)
     private String firstName;
-    @Column(name = "FULL_NAME", length = 100, nullable = false)
+    @Column(name = "FULL_NAME", length = 100)
     private String fullName;
-    @Column(name = "LEGAL_NAME", length = 100, nullable = false)
+    @Column(name = "LEGAL_NAME", length = 100)
     private String legalName;
     @Column(name = "ADDRESS", length = 100, nullable = false)
     private String address;
