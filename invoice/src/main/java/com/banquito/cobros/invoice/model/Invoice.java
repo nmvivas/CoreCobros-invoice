@@ -1,5 +1,6 @@
 package com.banquito.cobros.invoice.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,17 +27,19 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "INVOICE")
-public class Invoice {
+public class Invoice implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Long id;
     @Column(name = "PAY_COMM_ID", nullable = false)
     private Long payComId;
+    @Column(name = "RECIPIENT_ID",nullable = false)
+    private Long recipientId;
     @Column(name = "SEQUENTIAL", length = 20, nullable = false)
     private String sequential;
-    @Column(name = "AUTORIZATION_NUMBER", length = 40, nullable = false)
-    private String autorizationNumber;
+    @Column(name = "AUTHORIZATION_NUMBER", length = 40, nullable = false)
+    private String authorizationNumber;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE", nullable = false)
     private LocalDateTime date;
@@ -46,11 +49,8 @@ public class Invoice {
     private BigDecimal total;
 
     @ManyToOne
-    @JoinColumn(name = "RECIPIENT_ID", nullable = false)
+    @JoinColumn(name = "RECIPIENT_ID", referencedColumnName = "RECIPIENT_ID", insertable = false, updatable = false)
     private Recipient recipient;
-
-    @OneToMany(mappedBy = "invoice")
-    private List<InvoiceTaxDetail> taxDetails;
 
     public Invoice(Long id) {
         this.id = id;

@@ -1,5 +1,6 @@
 package com.banquito.cobros.invoice.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -20,13 +23,11 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "RECIPIENT")
-public class Recipient {
+public class Recipient implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RECIPIENT_ID", nullable = false)
     private Long id;
-    @Column(name = "INVOICE_ID", nullable = false)
-    private Long invoiceId;
     @Column(name = "IDENTIFICATION_TYPE", length = 3, nullable = false)
     private String identificationType;
     @Column(name = "IDENTIFICATION", length = 20, nullable = false)
@@ -45,9 +46,6 @@ public class Recipient {
     private String phone;
     @Column(name = "EMAIL", length = 100, nullable = false)
     private String email;
-
-    @OneToMany(mappedBy = "recipient")
-    private List<Invoice> invoices;
     
     public Recipient(Long id) {
         this.id = id;

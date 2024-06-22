@@ -1,5 +1,6 @@
 package com.banquito.cobros.invoice.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "INVOICE_TAX_DETAIL")
-public class InvoiceTaxDetail {
+public class InvoiceTaxDetail implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_TAX_DETAIL_ID", nullable = false)
@@ -36,10 +37,6 @@ public class InvoiceTaxDetail {
     private BigDecimal value;
     @Column(name = "PORCENTAGE", precision = 17, scale = 2, nullable = false)
     private BigDecimal porcentage;
-    
-    @ManyToOne
-    @JoinColumn(name = "INVOICE_ID", nullable = false)
-    private Invoice invoice;
 
     public InvoiceTaxDetail(Long id) {
         this.id = id;
