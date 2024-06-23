@@ -3,8 +3,6 @@ package com.banquito.cobros.invoice.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -27,24 +24,31 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "INVOICE")
-public class Invoice implements Serializable{
+public class Invoice implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_ID", nullable = false)
     private Long id;
+
     @Column(name = "PAY_COMM_ID", nullable = false)
     private Long payComId;
-    @Column(name = "RECIPIENT_ID",nullable = false)
+
+    @Column(name = "RECIPIENT_ID", nullable = false)
     private Long recipientId;
+
     @Column(name = "SEQUENTIAL", length = 20, nullable = false)
     private String sequential;
+
     @Column(name = "AUTHORIZATION_NUMBER", length = 40, nullable = false)
     private String authorizationNumber;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DATE", nullable = false)
     private LocalDateTime date;
+
     @Column(name = "SUBTOTAL", scale = 17, precision = 2, nullable = false)
     private BigDecimal subtotal;
+
     @Column(name = "TOTAL", scale = 17, precision = 2, nullable = false)
     private BigDecimal total;
 
@@ -80,6 +84,4 @@ public class Invoice implements Serializable{
             return false;
         return true;
     }
-    
-    
 }

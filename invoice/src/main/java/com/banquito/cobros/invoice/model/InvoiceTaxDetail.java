@@ -2,16 +2,11 @@ package com.banquito.cobros.invoice.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,17 +19,21 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "INVOICE_TAX_DETAIL")
-public class InvoiceTaxDetail implements Serializable{
+public class InvoiceTaxDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "INVOICE_TAX_DETAIL_ID", nullable = false)
     private Long id;
+
     @Column(name = "INVOICE_ID", nullable = false)
     private Long invoiceId;
+
     @Column(name = "NAME", length = 50, nullable = false)
     private String name;
+
     @Column(name = "VALUE", precision = 17, scale = 2, nullable = false)
     private BigDecimal value;
+
     @Column(name = "PORCENTAGE", precision = 17, scale = 2, nullable = false)
     private BigDecimal porcentage;
 
@@ -66,5 +65,4 @@ public class InvoiceTaxDetail implements Serializable{
             return false;
         return true;
     }
-    
 }
