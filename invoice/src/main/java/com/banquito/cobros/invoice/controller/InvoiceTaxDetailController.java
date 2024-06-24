@@ -20,13 +20,14 @@ public class InvoiceTaxDetailController {
     }
     
     @PostMapping
-    public ResponseEntity<InvoiceTaxDetail> createInvoiceTaxDetail(@RequestBody InvoiceTaxDetail invoiceTaxDetail) {
+    public ResponseEntity<?> createInvoiceTaxDetail(@RequestBody InvoiceTaxDetail invoiceTaxDetail) {
         try {
             InvoiceTaxDetail createdInvoiceTaxDetail = invoiceTaxDetailService.createInvoiceTaxDetail(invoiceTaxDetail);
             return new ResponseEntity<>(createdInvoiceTaxDetail, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

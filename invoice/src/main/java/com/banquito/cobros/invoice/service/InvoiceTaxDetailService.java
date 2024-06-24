@@ -9,6 +9,8 @@ import com.banquito.cobros.invoice.model.InvoiceTaxDetail;
 import com.banquito.cobros.invoice.repository.InvoiceRepository;
 import com.banquito.cobros.invoice.repository.InvoiceTaxDetailRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class InvoiceTaxDetailService {
     private InvoiceTaxDetailRepository invoiceTaxDetailRepository;
@@ -20,14 +22,21 @@ public class InvoiceTaxDetailService {
         this.invoiceRepository = invoiceRepository;
     }
 
+    @Transactional
     public InvoiceTaxDetail createInvoiceTaxDetail(InvoiceTaxDetail invoiceTaxDetail) {
-        Optional<Invoice> invoice = invoiceRepository.findById(invoiceTaxDetail.getInvoiceId());
-        if (invoice.isPresent()) {
-            invoiceTaxDetail.setInvoice(invoice.get());
-            invoiceTaxDetail.calculateValue();
+        if (invoiceTaxDetail.getInvoice() == null || invoiceTaxDetail.getInvoice().getId() == null) {
+            throw new IllegalArgumentException("Invoice or Invoice ID cannot be null");
+        }
+
+        Optional<Invoice> invoiceOpt = invoiceRepository.findById(invoiceTaxDetail.getInvoice().getId());
+        if (invoiceOpt.isPresent()) {
+            Invoice invoice = invoiceOpt.get();
+            invoiceTaxDetail.setInvoice(invoice);
+            invoiceTaxDetail.setInvoiceId(invoice.getId()); // Asignar explícitamente invoiceId
+            invoiceTaxDetail.calculateValue(); // Aquí se utiliza el campo 'total' del objeto 'Invoice'
             return invoiceTaxDetailRepository.save(invoiceTaxDetail);
         } else {
-            throw new IllegalArgumentException("Invoice not found for id: " + invoiceTaxDetail.getInvoiceId());
+            throw new IllegalArgumentException("Invoice not found for id: " + invoiceTaxDetail.getInvoice().getId());
         }
     }
 }
