@@ -51,6 +51,12 @@ public class Recipient implements Serializable{
         this.id = id;
     }
 
+    public void generateFullName() {
+        if (this.firstName != null && this.lastName != null) {
+            this.fullName = this.firstName + " " + this.lastName;
+        }
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

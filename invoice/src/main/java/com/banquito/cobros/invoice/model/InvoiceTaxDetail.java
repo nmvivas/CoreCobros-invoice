@@ -35,11 +35,21 @@ public class InvoiceTaxDetail implements Serializable{
     private String name;
     @Column(name = "VALUE", precision = 17, scale = 2, nullable = false)
     private BigDecimal value;
-    @Column(name = "PORCENTAGE", precision = 17, scale = 2, nullable = false)
-    private BigDecimal porcentage;
+    @Column(name = "PERCENTAGE", precision = 17, scale = 2, nullable = false)
+    private BigDecimal percentage;
+
+    @ManyToOne
+    @JoinColumn(name = "INVOICE_ID", insertable = false, updatable = false)
+    private Invoice invoice;
 
     public InvoiceTaxDetail(Long id) {
         this.id = id;
+    }
+
+    public void calculateValue() {
+        if (this.invoice != null && this.invoice.getTotal() != null && this.percentage != null) {
+            this.value = this.invoice.getTotal().multiply(this.percentage);
+        }
     }
 
     @Override
