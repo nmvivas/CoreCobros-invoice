@@ -47,7 +47,7 @@ public class InvoiceTaxDetail implements Serializable {
     }
 
     public void calculateValue() {
-        if (this.invoice != null && this.invoice.getTotal() != null && this.percentage != null) {
+        if (this.invoice != null && this.invoice.getSubtotal() != null && this.percentage != null) {
             this.value = this.invoice.getTotal().multiply(this.percentage);
         }
     }
